@@ -99,3 +99,4 @@ D/
 *.src/main/resources/dbconfig.properties
 *.src/main/resources/jeecg/jeecg_database.properties
 .idea/workspace.xml
+.idea/workspace.xml
