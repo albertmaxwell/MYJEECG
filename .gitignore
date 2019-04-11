@@ -1,0 +1,101 @@
+# ---> Java
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+.idea/ workspace.xml
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# ---> Eclipse
+# Compiled
+*.elc
+.idea/ workspace.xml
+# Packaging
+.cask
+.idea/ workspace.xml
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+.idea/workspace.xml
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+.cproject
+
+# CDT- autotools
+.autotools
+
+# Java annotation processor (APT)
+.factorypath
+
+# PDT-specific (PHP Development Tools)
+.buildpath
+
+# sbteclipse plugin
+.target
+
+
+# --->MAC
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# --->Windows
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+.idea/ workspace.xml
+
+# ---> Idea
+
+.idea/
+target/
+.project
+.classpath
+jeecg.eml
+jeecg.ipr
+jeecg.iws
+*.iml
+src/main/webapp/upload/
+docs/
+src/main/resources/jeecg/jeecg_config.properties
+jeecg.iml
+src/main/resources/jeecg/jeecg_config.properties
+D/
+*.src/main/resources/dbconfig.properties
+*.src/main/resources/jeecg/jeecg_database.properties
+.idea/workspace.xml
