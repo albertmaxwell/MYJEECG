@@ -85,7 +85,7 @@ public class TemplateUtil {
 
         switch (type){
             case ADD:
-//                templateName=entity.getTemplateAddName();
+//                templateName=vo.getTemplateAddName();
             	if(CgAutoListConstant.JFORM_TYPE_MAIN_TALBE==formType){
             		templateName="jformunion.ftl";
             	}else{
@@ -93,7 +93,7 @@ public class TemplateUtil {
             	}
                 break;
             case UPDATE:
-//                templateName=entity.getTemplateUpdateName();
+//                templateName=vo.getTemplateUpdateName();
             	if(CgAutoListConstant.JFORM_TYPE_MAIN_TALBE==formType){
             		templateName="jformunion.ftl";
             	}else{
@@ -105,7 +105,7 @@ public class TemplateUtil {
                 templateName="autolist.ftl";
                 break;
             case DETAIL:
-//                templateName=entity.getTemplateDetailName();
+//                templateName=vo.getTemplateDetailName();
             	if(CgAutoListConstant.JFORM_TYPE_MAIN_TALBE==formType){
             		templateName="jformunion.ftl";
             	}else{

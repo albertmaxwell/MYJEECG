@@ -3,6 +3,7 @@ package org.jeecgframework.web.cgreport.controller.core;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -33,9 +34,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+
 /**
- * 
+ *
  * @Title:CgReportController
  * @description:动态报表展示控制器
  * @author 赵俊夫
@@ -46,7 +51,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/cgReportController")
 public class CgReportController extends BaseController {
 	private static final Logger log = LoggerFactory.getLogger(CgReportController.class);
-	
+
 	@Autowired
 	private CgReportServiceI cgReportService;
 	/**
@@ -58,7 +63,7 @@ public class CgReportController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "list")
 	public void list(String id, HttpServletRequest request,
-			HttpServletResponse response) {
+					 HttpServletResponse response) {
 		//step.1 根据id获取该动态报表的配置参数
 		Map<String, Object>  cgReportMap = null;
 		try{
@@ -93,7 +98,7 @@ public class CgReportController extends BaseController {
 			}
 		}
 	}
-	
+
 	private String getHtmlHead(HttpServletRequest request){
 		HttpSession session = ContextHolderUtils.getSession();
 		String lang = (String)session.getAttribute("lang");
@@ -124,7 +129,7 @@ public class CgReportController extends BaseController {
 		sb.append("<script type=\"text/javascript\" src=\"plug-in/tools/easyuiextend.js\"></script>");
 		return sb.toString();
 	}
-	
+
 	/**
 	 * popup入口
 	 * @param id 动态配置ID-code
@@ -134,7 +139,7 @@ public class CgReportController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "popup")
 	public void popup(String id, HttpServletRequest request,
-			HttpServletResponse response) {
+					  HttpServletResponse response) {
 		//step.1 根据id获取该动态报表的配置参数
 		Map<String, Object>  cgReportMap = null;
 		try{
@@ -192,13 +197,13 @@ public class CgReportController extends BaseController {
 			for(String param:paramList){
 				sb.append("&").append(param).append("=");
 				String value = request.getParameter(param);
-    			if(StringUtil.isNotEmpty(value)){
-    				sb.append(value);
+				if(StringUtil.isNotEmpty(value)){
+					sb.append(value);
 
-    			}else{
-    				value = ResourceUtil.getUserSystemData(param);
-    				sb.append(value);
-    			}
+				}else{
+					value = ResourceUtil.getUserSystemData(param);
+					sb.append(value);
+				}
 
 			}
 		}
@@ -209,20 +214,20 @@ public class CgReportController extends BaseController {
 		//获取传递参数
 		cgReportMap.put(CgReportConstant.CONFIG_PARAMS, sb.toString());
 	}
-	
-	
+
+
 	/**
 	 * 动态报表数据查询
 	 * @param configId 配置id-code
 	 * @param page 分页页面
 	 * @param rows 分页大小
-	 * @param request 
+	 * @param request
 	 * @param response
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "datagrid")
 	public void datagrid(String configId,String page,String field,String rows, HttpServletRequest request,
-			HttpServletResponse response) {
+						 HttpServletResponse response) {
 		//step.1 根据id获取该动态报表的配置参数
 		Map<String, Object>  cgReportMap = null;
 		try{
@@ -254,8 +259,8 @@ public class CgReportController extends BaseController {
 //				SqlInjectionUtil.filterContent(value);
 
 //				querySql = querySql.replace("${"+param+"}", value);
-				
-				
+
+
 				querySql = querySql.replace("'${"+param+"}'", ":"+param);
 				querySql = querySql.replace("${"+param+"}", ":"+param);
 				paramData.put(param, value);
@@ -274,37 +279,37 @@ public class CgReportController extends BaseController {
 		int p = page==null?1:Integer.parseInt(page);
 		int r = rows==null?99999:Integer.parseInt(rows);
 
-        String dbKey=(String)configM.get("db_source");
-        List<Map<String, Object>> result=null;
-        Long size=0l;
-        if(StringUtils.isNotBlank(dbKey)){
+		String dbKey=(String)configM.get("db_source");
+		List<Map<String, Object>> result=null;
+		Long size=0l;
+		if(StringUtils.isNotBlank(dbKey)){
 
-        	Map map= null;
-        	if(paramData!=null&&paramData.size()>0){
-        		result= DynamicDBUtil.findListByHash(dbKey,SqlUtil.jeecgCreatePageSql(dbKey,querySql,pageSearchFields,p,r),(HashMap<String, Object>)paramData);
-        		map=(Map)DynamicDBUtil.findOneByHash(dbKey,SqlUtil.getCountSql(querySql,pageSearchFields),(HashMap<String, Object>)paramData);
-        	}else{
-        		result= DynamicDBUtil.findList(dbKey,SqlUtil.jeecgCreatePageSql(dbKey,querySql,pageSearchFields,p,r));
+			Map map= null;
+			if(paramData!=null&&paramData.size()>0){
+				result= DynamicDBUtil.findListByHash(dbKey,SqlUtil.jeecgCreatePageSql(dbKey,querySql,pageSearchFields,p,r),(HashMap<String, Object>)paramData);
+				map=(Map)DynamicDBUtil.findOneByHash(dbKey,SqlUtil.getCountSql(querySql,pageSearchFields),(HashMap<String, Object>)paramData);
+			}else{
+				result= DynamicDBUtil.findList(dbKey,SqlUtil.jeecgCreatePageSql(dbKey,querySql,pageSearchFields,p,r));
 
-        		map=(Map)DynamicDBUtil.findOne(dbKey,SqlUtil.getCountSql(querySql,pageSearchFields));
+				map=(Map)DynamicDBUtil.findOne(dbKey,SqlUtil.getCountSql(querySql,pageSearchFields));
 
-        	}
+			}
 
-            if(map.get("COUNT(*)") instanceof BigDecimal){
-            	BigDecimal count = (BigDecimal)map.get("COUNT(*)");
-            	size = count.longValue();
-            }else{
-            	size=(Long)map.get("COUNT(*)");
-            }
-        }else{
+			if(map.get("COUNT(*)") instanceof BigDecimal){
+				BigDecimal count = (BigDecimal)map.get("COUNT(*)");
+				size = count.longValue();
+			}else{
+				size=(Long)map.get("COUNT(*)");
+			}
+		}else{
 
-        	result= cgReportService.queryByCgReportSql(querySql, pageSearchFields,paramData, p, r);
-        	log.debug(" ------cgReport SQL: {} , paramData: {} ," ,querySql,paramData );
-            size = cgReportService.countQueryByCgReportSql(querySql, pageSearchFields,paramData);
+			result= cgReportService.queryByCgReportSql(querySql, pageSearchFields,paramData, p, r);
+			log.debug(" ------cgReport SQL: {} , paramData: {} ," ,querySql,paramData );
+			size = cgReportService.countQueryByCgReportSql(querySql, pageSearchFields,paramData);
 
-        }
+		}
 
-        cgReportService.dealDic(result,items);
+		cgReportService.dealDic(result,items);
 		cgReportService.dealReplace(result,items);
 		response.setContentType("application/json");
 		response.setHeader("Cache-Control", "no-store");
@@ -344,7 +349,7 @@ public class CgReportController extends BaseController {
 
 			//无法直接捕捉到:java.net.ConnectException异常
 			int i = e.getMessage().indexOf("Connection refused: connect");
-			
+
 			if (i != -1) {//非链接异常
 				errorInfo += "数据源连接失败.";
 			}else{
@@ -360,5 +365,159 @@ public class CgReportController extends BaseController {
 		reJson.put("params", params);
 		return reJson;
 	}
-	
+
+
+	/**
+	 * popup入口（传参版）
+	 * @param id 动态配置ID-code
+	 * @param request
+	 * @param response
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params = "popupParam")
+	public void popupParam(String id
+			, @RequestParam(value="params", required=false)  String params
+			, @RequestParam(value="condition", required=false) String condition
+			, HttpServletRequest request,
+						   HttpServletResponse response) {
+		//step.1 根据id获取该动态报表的配置参数
+		Map<String, Object>  cgReportMap = null;
+		try{
+			cgReportMap = cgReportService.queryCgReportConfig(id);
+		}catch (Exception e) {
+			throw new CgReportNotFoundException("动态报表配置不存在!");
+		}
+		//step.2 获取列表ftl模板路径
+		FreemarkerHelper viewEngine = new FreemarkerHelper();
+		//step.3 组合模板+数据参数，进行页面展现
+		loadVars(cgReportMap,request);
+
+		//step.4 页面css js引用
+		cgReportMap.put(CgReportConstant.CONFIG_IFRAME, getHtmlHead(request));
+
+
+		String html = null;
+		if(condition != null) {
+			//解码参数
+			condition = URLDecoder.decode(condition);
+			cgReportMap.put("condition", condition);
+			html = viewEngine.parseTemplate("/org/jeecgframework/web/cgreport/engine/core/cgreportlistpopup_param_ext.ftl", cgReportMap);
+		} else {
+			//解码参数
+			params = URLDecoder.decode(params);
+			cgReportMap.put("params", params);
+			html = viewEngine.parseTemplate("/org/jeecgframework/web/cgreport/engine/core/cgreportlistpopup_param.ftl", cgReportMap);
+		}
+		PrintWriter writer = null;
+		try {
+			response.setContentType("text/html");
+			response.setHeader("Cache-Control", "no-store");
+			writer = response.getWriter();
+			writer.println(html);
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				writer.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+
+	/**
+	 * 动态报表数据查询Ext
+	 * @param configId 配置id-code
+	 * @param page 分页页面
+	 * @param rows 分页大小
+	 * @param request
+	 * @param response
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(params = "datagridExt")
+	public void datagridExt(String configId,String page,String field,String rows, HttpServletRequest request,
+							HttpServletResponse response, String condition) {
+		//step.1 根据id获取该动态报表的配置参数
+		Map<String, Object>  cgReportMap = null;
+		try{
+			cgReportMap = cgReportService.queryCgReportConfig(configId);
+			if(cgReportMap.size()<=0){
+				throw new CgReportNotFoundException("动态报表配置不存在!");
+			}
+		}catch (Exception e) {
+			throw new CgReportNotFoundException("查找动态报表配置失败!"+e.getMessage());
+		}
+		//step.2 获取该配置的查询SQL
+		Map configM = (Map) cgReportMap.get(CgReportConstant.MAIN);
+		//报表 - 查询SQL
+		String querySql = (String) configM.get(CgReportConstant.CONFIG_SQL);
+		//报表字段
+		List<Map<String,Object>> items = (List<Map<String, Object>>) cgReportMap.get(CgReportConstant.ITEMS);
+		//SQL参数
+		List<String> paramList = (List<String>) cgReportMap.get(CgReportConstant.PARAMS);
+		//页面参数查询字段（SQL条件语句片段）
+		Map<String,Object> pageSearchFields =  new LinkedHashMap<String,Object>();
+
+		//获取查询条件数据
+		Map<String,Object> paramData = new HashMap<String, Object>();
+		if(paramList!=null&&paramList.size()>0){
+			for(String param :paramList){
+				String value = request.getParameter(param);
+				value = value==null?"":value;
+
+//				SqlInjectionUtil.filterContent(value);
+
+//				querySql = querySql.replace("${"+param+"}", value);
+
+
+				querySql = querySql.replace("'${"+param+"}'", ":"+param);
+				querySql = querySql.replace("${"+param+"}", ":"+param);
+				paramData.put(param, value);
+			}
+		}
+
+		for(Map<String,Object> item:items){
+			String isQuery = (String) item.get(CgReportConstant.ITEM_ISQUERY);
+			if(CgReportConstant.BOOL_TRUE.equalsIgnoreCase(isQuery)){
+				//step.3 装载查询条件
+				CgReportQueryParamUtil.loadQueryParams(request, item, pageSearchFields,paramData);
+			}
+		}
+
+		//step.4 进行查询返回结果
+		int p = page==null?1:Integer.parseInt(page);
+		int r = rows==null?99999:Integer.parseInt(rows);
+
+		String dbKey=(String)configM.get("db_source");
+		List<Map<String, Object>> result=null;
+		Long size=0l;
+		Gson gson = new Gson();
+		List<Map<String, String>> conditions = null;
+		if(!org.springframework.util.StringUtils.isEmpty(condition)) {
+			conditions = gson.fromJson(condition, List.class);
+		}
+		result= cgReportService.queryByCgReportSqlExt(querySql, pageSearchFields,paramData, p, r, conditions);
+		log.debug(" ------cgReport SQL: {} , paramData: {} ," ,querySql,paramData );
+		size = cgReportService.countQueryByCgReportSqlExt(querySql, pageSearchFields,paramData, conditions);
+
+		cgReportService.dealDic(result,items);
+		cgReportService.dealReplace(result,items);
+		response.setContentType("application/json");
+		response.setHeader("Cache-Control", "no-store");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+			writer.println(CgReportQueryParamUtil.getJson(result,size));
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				writer.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
 }

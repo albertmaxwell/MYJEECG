@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.jeecgframework.core.common.entity.IdEntity;
 
 /**
- * TSRoleUser entity.
+ * TSRoleUser vo.
  * @author  张代浩
  */
 @Entity

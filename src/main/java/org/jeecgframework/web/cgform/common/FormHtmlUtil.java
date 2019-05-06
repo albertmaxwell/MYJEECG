@@ -407,8 +407,8 @@ public class FormHtmlUtil {
     	html.append("<#list filesList as fileB>");
     	html.append("<tr style=\"height:34px;\">");
     	html.append("<td>\\${fileB['title']}</td>");
-    	html.append("<td><a href=\"commonController.do?viewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\" title=\"下载\">下载</a></td>");
-    	html.append("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
+    	html.append("<td><a href=\"commonController.do?viewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\" title=\"下载\">下载</a></td>");
+    	html.append("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
     	html.append("<td><a href=\"javascript:void(0)\" class=\"jeecgDetail\" onclick=\"del('cgUploadController.do?delFile&id=\\${fileB['fileKey']}',this)\">删除</a></td>");
     	html.append("</tr></#list></table>");
     	html.append("<div class=\"form jeecgDetail\">");
@@ -456,8 +456,8 @@ public class FormHtmlUtil {
     	html.append("<#list filesList as fileB>");
     	html.append("<tr style=\"height:34px;\">");
     	html.append("<td>\\${fileB['title']}</td>");
-    	html.append("<td><a href=\"commonController.do?viewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\" title=\"下载\">下载</a></td>");
-    	html.append("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
+    	html.append("<td><a href=\"commonController.do?viewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\" title=\"下载\">下载</a></td>");
+    	html.append("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=\\${fileB['fileKey']}&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
     	html.append("<td><a href=\"javascript:void(0)\" class=\"jeecgDetail\" onclick=\"del('cgUploadController.do?delFile&id=\\${fileB['fileKey']}',this)\">删除</a></td>");
     	html.append("</tr></#list></table>");
     	html.append("<div class='plupload-btns'>");

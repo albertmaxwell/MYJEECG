@@ -477,8 +477,8 @@
 	  				var td_title = $("<td title='"+ file.title+"'>" + title + "</td>");
 	  				<#-- update--end--author:zhangjiaqiang date:20170614 for:文件名称太长显示问题 -->
 	  		  		<#-- update--begin--author:zhangjiaqiang date:20170607 for:增加按钮之间的间隔 -->
-	  		  		var td_download = $("<td><a style=\"margin-left:10px;\" href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
-	  		  		var td_view = $("<td><a style=\"margin-left:10px;\" href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
+	  		  		var td_download = $("<td><a style=\"margin-left:10px;\" href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
+	  		  		var td_view = $("<td><a style=\"margin-left:10px;\" href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
 	  		  		<#-- update--end--author:zhangjiaqiang date:20170607 for:增加按钮之间的间隔 -->
 	  		  		
 	  		  		tr.appendTo(table);

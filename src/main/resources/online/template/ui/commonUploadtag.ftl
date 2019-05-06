@@ -215,8 +215,8 @@ var addSuccessFile = function(file) {
 	}
 	html+='</td>';
 	html+='<td><a title="删除" class="jeecgDetail file_close" href="javascript:void(0)" style="margin:0 8px;text-decoration: none;">删除</a></td>';
-	//html+='<td><a title="预览" href="javascript:void(0);" onclick="openwindow(\'预览\',\'${basePath}/commonController.do?openViewFile&fileid='+fileid+'&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\',\'fList\',700,500)" style="margin:0 8px;text-decoration: none;">预览</a></td>';
-	//html+='<td><a title="下载" href="${basePath}/commonController.do?viewFile&fileid='+fileid+'&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity" style="margin:0 8px;text-decoration: none;">下载</a></td>';
+	//html+='<td><a title="预览" href="javascript:void(0);" onclick="openwindow(\'预览\',\'${basePath}/commonController.do?openViewFile&fileid='+fileid+'&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\',\'fList\',700,500)" style="margin:0 8px;text-decoration: none;">预览</a></td>';
+	//html+='<td><a title="下载" href="${basePath}/commonController.do?viewFile&fileid='+fileid+'&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity" style="margin:0 8px;text-decoration: none;">下载</a></td>';
 	html+='<td style="display:none"><input type="hidden" name="${po.field_name}" value="'+path+'"/></td></tr>';
 	$("#${po.field_name}thelist").children('table').append(html);
 }

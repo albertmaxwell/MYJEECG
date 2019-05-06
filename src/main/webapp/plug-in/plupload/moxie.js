@@ -5027,7 +5027,7 @@ define("moxie/xhr/XMLHttpRequest", [
 				All redirects (if any) have been followed and all HTTP headers of the final response have been received. Several response members of the object are now available.
 
 				LOADING (numeric value 3)
-				The response entity body is being received.
+				The response vo body is being received.
 
 				DONE (numeric value 4)
 
@@ -5074,7 +5074,7 @@ define("moxie/xhr/XMLHttpRequest", [
 				responseType: "",
 
 				/**
-				Returns the document response entity body.
+				Returns the document response vo body.
 
 				Throws an "InvalidStateError" exception if responseType is not the empty string or "document".
 
@@ -5084,7 +5084,7 @@ define("moxie/xhr/XMLHttpRequest", [
 				responseXML: null,
 
 				/**
-				Returns the text response entity body.
+				Returns the text response vo body.
 
 				Throws an "InvalidStateError" exception if responseType is not the empty string or "text".
 
@@ -5094,7 +5094,7 @@ define("moxie/xhr/XMLHttpRequest", [
 				responseText: null,
 
 				/**
-				Returns the response entity body (http://www.w3.org/TR/XMLHttpRequest/#response-entity-body).
+				Returns the response vo body (http://www.w3.org/TR/XMLHttpRequest/#response-entity-body).
 				Can become: ArrayBuffer, Blob, Document, JSON, Text
 
 				@property response
@@ -5411,13 +5411,13 @@ define("moxie/xhr/XMLHttpRequest", [
 			},
 
 			/**
-			Initiates the request. The optional argument provides the request entity body.
+			Initiates the request. The optional argument provides the request vo body.
 			The argument is ignored if request method is GET or HEAD.
 
 			Throws an "InvalidStateError" exception if the state is not OPENED or if the send() flag is set.
 
 			@method send
-			@param {Blob|Document|String|FormData} [data] Request entity body
+			@param {Blob|Document|String|FormData} [data] Request vo body
 			@param {Object} [options] Set of requirements and pre-requisities for runtime initialization
 			*/
 			send: function(data, options) {

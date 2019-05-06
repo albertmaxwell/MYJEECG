@@ -567,7 +567,7 @@ public abstract class GenericBaseCommonDao<T, PK extends Serializable>
 
 	public List findByExample(final String entityName,
 			final Object exampleEntity) {
-		Assert.notNull(exampleEntity, "Example entity must not be null");
+		Assert.notNull(exampleEntity, "Example vo must not be null");
 		Criteria executableCriteria = (entityName != null ? getSession()
 				.createCriteria(entityName) : getSession().createCriteria(
 				exampleEntity.getClass()));

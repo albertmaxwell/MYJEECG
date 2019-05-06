@@ -110,7 +110,7 @@ public class CgformTemplateController extends BaseController {
 		List<CgformTemplateEntity> dataList=dataGrid.getResults();
 		if(dataList!=null&&dataList.size()>0){
 			for(CgformTemplateEntity entity:dataList){
-				//entity.setTemplatePic("cgformTemplateController.do?showPic&code="+entity.getTemplateCode()+"&path="+entity.getTemplatePic());
+				//vo.setTemplatePic("cgformTemplateController.do?showPic&code="+vo.getTemplateCode()+"&path="+vo.getTemplatePic());
 				if(oConvertUtils.isNotEmpty(entity.getTemplatePic())){
 					entity.setTemplatePic("img-online/server/"+entity.getTemplateCode()+"/images/"+entity.getTemplatePic());
 				}else{

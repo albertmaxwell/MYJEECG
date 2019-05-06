@@ -11,7 +11,7 @@ import org.jeecgframework.core.common.entity.IdEntity;
 
 
 /**
- * TLog entity.
+ * TLog vo.
  *  @author  张代浩
  */
 @Entity

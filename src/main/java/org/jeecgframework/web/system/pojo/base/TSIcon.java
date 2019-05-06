@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import org.jeecgframework.core.common.entity.IdEntity;
 
 /**
- * TIcon entity.
+ * TIcon vo.
  *  @author  张代浩
  */
 @Entity

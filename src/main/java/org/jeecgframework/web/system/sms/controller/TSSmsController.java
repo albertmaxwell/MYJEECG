@@ -337,8 +337,8 @@ public class TSSmsController extends BaseController {
 		
 //		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 //		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-//		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-//			MultipartFile file = entity.getValue();// 获取上传文件对象
+//		for (Map.Entry<String, MultipartFile> vo : fileMap.entrySet()) {
+//			MultipartFile file = vo.getValue();// 获取上传文件对象
 //			ImportParams params = new ImportParams();
 //			params.setTitleRows(2);
 //			params.setSecondTitleRows(1);

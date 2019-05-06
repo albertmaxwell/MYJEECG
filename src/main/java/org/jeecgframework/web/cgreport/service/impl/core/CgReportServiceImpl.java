@@ -1,6 +1,7 @@
 package org.jeecgframework.web.cgreport.service.impl.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.crm.projectmanage.util.Md5Util;
 import org.apache.commons.lang.StringUtils;
 import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.exception.BusinessException;
@@ -31,17 +33,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
 @Service(value="cgReportService")
 @Transactional
 public class CgReportServiceImpl extends CommonServiceImpl implements CgReportServiceI {
 	private static final Logger log = LoggerFactory.getLogger(CgReportServiceImpl.class);
-	
+
 	@Autowired
 	private JdbcDao jdbcDao;
 	@Autowired
 	private CgReportDao cgReportDao;
-	
-	
+
+
 	public Map<String, Object> queryCgReportConfig(String reportId) {
 		Map<String,Object> cgReportM = new HashMap<String, Object>(0);
 		Map<String,Object> mainM = queryCgReportMainConfig(reportId);
@@ -52,45 +56,45 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		cgReportM.put(CgReportConstant.PARAMS, params);
 		return cgReportM;
 	}
-	
+
 	public Map<String,Object> queryCgReportMainConfig(String reportId){
 //		String sql = JeecgSqlUtil.getMethodSql(JeecgSqlUtil.getMethodUrl());
 //		Map<String,Object> parameters = new LinkedHashMap<String,Object>();
 //		parameters.put("id", reportId);
 //		Map mainM = jdbcDao.findForMap(sql, parameters);
-		
+
 		//采用MiniDao实现方式
 		return cgReportDao.queryCgReportMainConfig(reportId);
 	}
-	
+
 	public List<Map<String,Object>> queryCgReportItems(String reportId){
 //		String sql = JeecgSqlUtil.getMethodSql(JeecgSqlUtil.getMethodUrl());
 //		Map<String,Object> parameters = new LinkedHashMap<String,Object>();
 //		parameters.put("configId", reportId);
 //		List<Map<String,Object>> items = jdbcDao.findForListMap(sql, parameters);
-		
+
 		//采用MiniDao实现方式
 		return cgReportDao.queryCgReportItems(reportId);
 	}
-	
+
 	public List<String> queryCgReportParam(String reportId){
 		List<String> list = null;
 		CgreportConfigHeadEntity cgreportConfigHead = this.findUniqueByProperty(CgreportConfigHeadEntity.class, "code", reportId);
-    	String hql0 = "from CgreportConfigParamEntity where 1 = 1 AND cgrheadId = ? ";
-    	List<CgreportConfigParamEntity> cgreportConfigParamList = this.findHql(hql0,cgreportConfigHead.getId());
-    	if(cgreportConfigParamList!=null&cgreportConfigParamList.size()>0){
-    		list = new ArrayList<String>();
-    		for(CgreportConfigParamEntity cgreportConfigParam :cgreportConfigParamList){
-    			list.add(cgreportConfigParam.getParamName());
-    		}
-    	}
+		String hql0 = "from CgreportConfigParamEntity where 1 = 1 AND cgrheadId = ? ";
+		List<CgreportConfigParamEntity> cgreportConfigParamList = this.findHql(hql0,cgreportConfigHead.getId());
+		if(cgreportConfigParamList!=null&cgreportConfigParamList.size()>0){
+			list = new ArrayList<String>();
+			for(CgreportConfigParamEntity cgreportConfigParam :cgreportConfigParamList){
+				list.add(cgreportConfigParam.getParamName());
+			}
+		}
 		return list;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	
+
 	public List<Map<String, Object>> queryByCgReportSql(String sql, Map params,Map paramData,
-			int page, int rows) {
+														int page, int rows) {
 		String querySql = getFullSql(sql,params);
 		List<Map<String,Object>> result = null;
 		if(paramData!=null&&paramData.size()==0){
@@ -122,15 +126,15 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 				String key = String.valueOf(it.next());
 				String value = String.valueOf(params.get(key));
 				if (!StringUtil.isEmpty(value) && !"null".equals(value)) {
-						sqlB.append(" AND ");
-						sqlB.append(" " + key +  value );
+					sqlB.append(" AND ");
+					sqlB.append(" " + key +  value );
 				}
 			}
 		}
 		return sqlB.toString();
 	}
 	@SuppressWarnings("unchecked")
-	
+
 	public long countQueryByCgReportSql(String sql, Map params,Map paramData) {
 		String querySql = getFullSql(sql,params);
 		querySql = "SELECT COUNT(*) FROM ("+querySql+") t2";
@@ -141,7 +145,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		return result;
 	}
 	@SuppressWarnings( "unchecked" )
-	
+
 	public List<String> getSqlFields(String sql) {
 		if(oConvertUtils.isEmpty(sql)){
 			return null;
@@ -172,7 +176,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		}
 		return fields;
 	}
-	
+
 	/**
 	 * 【转换${}规则为万能SQL，方便SQL执行解析】
 	 * @param sql
@@ -201,7 +205,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		}
 		return sql;
 	}
-	
+
 	/**
 	 * 解析SQL参数
 	 */
@@ -211,7 +215,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		}
 		List<String> params = new ArrayList<String>();
 		String regex = "\\$\\{\\w+\\}";
-		
+
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(sql);
 		while(m.find()){
@@ -220,8 +224,8 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		}
 		return params;
 	}
-	
-	
+
+
 	/**
 	 * 装载数据字典
 	 * @param m	要放入freemarker的数据
@@ -236,7 +240,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		List<Map<String, Object>> dicDatas = queryDicBySQL(dict_code);
 		m.put(CgReportConstant.FIELD_DICTLIST, dicDatas);
 	}
-	
+
 	/**
 	 * 查询数据字典，扩展了对SQL的支持
 	 * @param dictCodeOrSQL 字典编码或SQL
@@ -255,8 +259,8 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 		}
 		return dicDatas;
 	}
-	
-	
+
+
 	/**
 	 * 查询数据字典
 	 * @param diccode 字典编码
@@ -281,7 +285,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 
 		return dicDatas;
 	}
-	
+
 	/**
 	 * 处理取值表达式
 	 * @param result
@@ -315,7 +319,7 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 			}
 		}
 	}
-	
+
 	/**
 	 * 装载数据字典
 	 * @param result 查询的结果集
@@ -332,20 +336,133 @@ public class CgReportServiceImpl extends CommonServiceImpl implements CgReportSe
 			}else{
 
 				List<Map<String, Object>> dicDatas = queryDicBySQL(dict_code);
-				if(result!=null){
-					for(Map r:result){
-						String value = String.valueOf(r.get(field_name));
-						for(Map m:dicDatas){
-							String typecode = String.valueOf(m.get("typecode"));
-							String typename = String.valueOf(m.get("typename"));
-							if(value.equalsIgnoreCase(typecode)){
-								r.put(bean.get(CgReportConstant.ITEM_FIELDNAME),typename);
-							}
+				for(Map r:result){
+					String value = String.valueOf(r.get(field_name));
+					for(Map m:dicDatas){
+						String typecode = String.valueOf(m.get("typecode"));
+						String typename = String.valueOf(m.get("typename"));
+						if(value.equalsIgnoreCase(typecode)){
+							r.put(bean.get(CgReportConstant.ITEM_FIELDNAME),typename);
 						}
 					}
 				}
 
 			}
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> queryByCgReportSqlExt(String sql, Map params,Map paramData,
+														   int page, int rows, List<Map<String, String>> conditions) {
+		String querySql = getFullSqlExt(sql,params,conditions);
+		List<Map<String,Object>> result = null;
+		if(paramData!=null&&paramData.size()==0){
+			paramData = null;
+		}
+		if(conditions != null && conditions.size() > 0) {
+			//拼接条件
+			if(paramData == null) {
+				paramData = new HashMap<>();
+			}
+			for(Map<String, String> map : conditions) {
+				String column = map.get("column");
+				String value = map.get("value");
+				String comp = map.get("comp");
+				if("in".equalsIgnoreCase(comp)) {
+					String[] val = value.split(",");
+					for(String s : val) {
+						paramData.put("c_"+ Md5Util.MD5(column+s), s);
+					}
+				} else {
+					paramData.put("c_"+Md5Util.MD5(column+value), value);
+				}
+			}
+		}
+		if(page==-1 && rows==-1){
+			result = jdbcDao.findForListMap(querySql,paramData);
+		}else{
+			result = jdbcDao.findForListMap(querySql,paramData, page, rows);
+		}
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public long countQueryByCgReportSqlExt(String sql, Map params,Map paramData, List<Map<String, String>> conditions) {
+		String querySql = getFullSqlExt(sql,params,conditions);
+		querySql = "SELECT COUNT(*) FROM ("+querySql+") t2";
+		if(paramData!=null&&paramData.size()==0){
+			paramData = null;
+		}
+		if(conditions != null && conditions.size() > 0) {
+			//拼接条件
+			if(paramData == null) {
+				paramData = new HashMap<>();
+			}
+			for(Map<String, String> map : conditions) {
+				String column = map.get("column");
+				String value = map.get("value");
+				String comp = map.get("comp");
+				if("in".equalsIgnoreCase(comp)) {
+					String[] val = value.split(",");
+					for(String s : val) {
+						paramData.put("c_"+Md5Util.MD5(column+s), s);
+					}
+				} else {
+					paramData.put("c_"+Md5Util.MD5(column+value), value);
+				}
+			}
+		}
+		long result = jdbcDao.findForLong(querySql,paramData);
+		return result;
+	}
+
+	/**
+	 * 获取拼装查询条件之后的sql
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static String getFullSqlExt(String sql,Map params, List<Map<String, String>> conditions){
+		StringBuilder sqlB =  new StringBuilder();
+		sqlB.append("SELECT t2.* FROM (SELECT t.* FROM ( ");
+		sqlB.append(sql+" ");
+		sqlB.append(") t ");
+		sqlB.append("WHERE 1=1  ");
+		List<String> comps = Arrays.asList(new String[]{">","=","<",">=","<=","<>","in"});
+		if(conditions != null && conditions.size() > 0) {
+			//条件参数
+			for(Map<String, String> map : conditions) {
+				String column = map.get("column");
+				String comp = map.get("comp");
+				String value = map.get("value");
+				if(comps.contains(comp)) {
+					if("in".equalsIgnoreCase(comp)) {
+						sqlB.append(" AND " + column + " in (");
+						String[] val = value.split(",");
+						for(String s : val) {
+							sqlB.append(":c_" + Md5Util.MD5(column+s) + ",");
+						}
+						sqlB.delete(sqlB.length() - 1, sqlB.length());
+						sqlB.append(")");
+					} else {
+						sqlB.append(" AND " + column + comp + ":c_" + Md5Util.MD5(column+value));
+					}
+				}
+			}
+		}
+		sqlB.append(") t2 WHERE 1=1 ");
+		if (params!=null&&params.size() >= 1) {
+			Iterator it = params.keySet().iterator();
+			while (it.hasNext()) {
+				String key = String.valueOf(it.next());
+				String value = String.valueOf(params.get(key));
+				if (!StringUtil.isEmpty(value) && !"null".equals(value)) {
+					sqlB.append(" AND ");
+					sqlB.append(" " + key +  value );
+				}
+			}
+		}
+		return sqlB.toString();
 	}
 }

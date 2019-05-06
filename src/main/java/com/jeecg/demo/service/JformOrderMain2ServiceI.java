@@ -11,9 +11,9 @@ public interface JformOrderMain2ServiceI extends CommonService{
 	
  	public <T> void delete(T entity);
  	
- 	/*public <T> void add(T entity);
+ 	/*public <T> void add(T vo);
  	
- 	public <T> void addOrUpdate(T entity);*/
+ 	public <T> void addOrUpdate(T vo);*/
 	/**
 	 * 添加一对多
 	 * 

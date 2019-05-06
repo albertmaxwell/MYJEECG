@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.jeecgframework.core.common.entity.IdEntity;
 
 /**
- * TTypegroup entity.
+ * TTypegroup vo.
  */
 @Entity
 @Table(name = "t_s_typegroup")

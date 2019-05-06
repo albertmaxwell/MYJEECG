@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.jeecgframework.core.common.entity.IdEntity;
 
 /**
- * TRoleFunction entity. 
+ * TRoleFunction vo.
  *  @author  张代浩
  */
 @Entity

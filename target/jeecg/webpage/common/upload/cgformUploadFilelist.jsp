@@ -19,11 +19,11 @@
 </div>
 <script>
 function iview(id){
-	var url = "commonController.do?openViewFile&fileid="+id+"&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity";
+	var url = "commonController.do?openViewFile&fileid="+id+"&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity";
 	openwindow('预览',url,'cgUploadFileList',700,500);
 }
 function idown(id){
-	location.href = "commonController.do?viewFile&fileid="+id+"&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity";
+	location.href = "commonController.do?viewFile&fileid="+id+"&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity";
 }
 function concatNameAndExt(value,row){
 	if(!value){

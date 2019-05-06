@@ -586,10 +586,10 @@ public class SystemController extends BaseController {
 		String typecode=oConvertUtils.getString(request.getParameter("param"));
 		String code=oConvertUtils.getString(request.getParameter("code"));
 		String typeGroupCode=oConvertUtils.getString(request.getParameter("typeGroupCode"));
-		StringBuilder hql = new StringBuilder("FROM ").append(TSType.class.getName()).append(" AS entity WHERE 1=1 ");
+		StringBuilder hql = new StringBuilder("FROM ").append(TSType.class.getName()).append(" AS vo WHERE 1=1 ");
 
-		hql.append(" AND entity.TSTypegroup.typegroupcode =  ?");
-		hql.append(" AND entity.typecode =  ?");
+		hql.append(" AND vo.TSTypegroup.typegroupcode =  ?");
+		hql.append(" AND vo.typecode =  ?");
 //		List<Object> types = this.systemService.findByQueryString(hql.toString());
 		List<Object> types = this.systemService.findHql(hql.toString(),typeGroupCode,typecode);
 

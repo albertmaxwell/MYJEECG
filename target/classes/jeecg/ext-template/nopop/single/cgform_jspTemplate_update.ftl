@@ -230,8 +230,8 @@
 		  				<#-- update--end--author:zhangjiaqiang date:20170531 for:多个附件的数据显示 -->
 		  				var tr = $("<tr style=\"height:34px;\"></tr>");
 		  				var td_title = $("<td>" + file.title + "</td>")
-		  		  		var td_download = $("<td><a href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
-		  		  		var td_view = $("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
+		  		  		var td_download = $("<td><a href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
+		  		  		var td_view = $("<td><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
 		  		  		
 		  		  		tr.appendTo(table);
 		  		  		td_title.appendTo(tr);

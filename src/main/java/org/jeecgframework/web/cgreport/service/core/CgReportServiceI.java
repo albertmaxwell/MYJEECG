@@ -6,7 +6,7 @@ import java.util.Map;
 import org.jeecgframework.core.common.service.CommonService;
 
 /**
- * 
+ *
  * @Title:CgReportServiceI
  * @description:动态报表服务接口
  * @author 赵俊夫
@@ -71,7 +71,7 @@ public interface CgReportServiceI extends CommonService{
 	 * @return
 	 */
 	public List<String> getSqlParams(String sql);
-	
+
 	/**
 	 * 加载字典
 	 * @param fl
@@ -80,4 +80,24 @@ public interface CgReportServiceI extends CommonService{
 	public void loadDic(Map<String, Object> fl);
 	public void dealDic(List<Map<String, Object>> result, List<Map<String, Object>> items);
 	public void dealReplace(List<Map<String, Object>> result, List<Map<String, Object>> items);
+
+	/**
+	 * 执行报表SQL获取结果集
+	 * @param sql 报表SQL
+	 * @param params 查询条件
+	 * @param page 页面数
+	 * @param rows 要获取的条目总数
+	 * @return
+	 */
+
+	public List<Map<String,Object>> queryByCgReportSqlExt(String sql,Map params,Map paramData,int page,int rows, List<Map<String, String>> conditions);
+
+	/**
+	 * 获取报表sql结果集大小
+	 * @param sql 报表SQL
+	 * @param params 查询条件
+	 * @return
+	 */
+
+	public long countQueryByCgReportSqlExt(String sql,Map params,Map paramData, List<Map<String, String>> conditions);
 }

@@ -204,7 +204,7 @@ public class GenerateController extends BaseController {
 		String ftlDescription = generateEntity.getFtlDescription();
 		try {
 			//step.2 判断表是否存在
-			boolean tableexist = new JeecgReadTable().checkTableExist(tableName);
+			boolean tableexist = true;
 			if(tableexist){
 
 				String version = request.getParameter("version");

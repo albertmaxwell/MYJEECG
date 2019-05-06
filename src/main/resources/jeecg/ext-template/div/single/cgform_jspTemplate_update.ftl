@@ -222,8 +222,8 @@
 	  					title = title.substring(0,25) + "...";
 	  				}
 	  				var td_title = $("<td title=\""+file.title+"\">" + title + "</td>");
-	  		  		var td_download = $("<td style=\"width:40px;text-align: center;\"><a href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
-	  		  		var td_view = $("<td style=\"width:40px;text-align: center;\"><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.entity.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
+	  		  		var td_download = $("<td style=\"width:40px;text-align: center;\"><a href=\"commonController.do?viewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity\" title=\"下载\">下载</a></td>")
+	  		  		var td_view = $("<td style=\"width:40px;text-align: center;\"><a href=\"javascript:void(0);\" onclick=\"openwindow('预览','commonController.do?openViewFile&fileid=" + file.fileKey + "&subclassname=org.jeecgframework.web.cgform.vo.upload.CgUploadEntity','fList',700,500)\">预览</a></td>");
 	  		  		<#-- update--end--author:Yandong date:20180418 for:TASK #2638 【UI样式效果】上传效果重复，样式不好看 -->
 	  		  		tr.appendTo(table);
 	  		  		td_title.appendTo(tr);
